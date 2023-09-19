@@ -25,8 +25,8 @@ public class RadixSort {
             max = Math.max(max, i);
         }
         // 计算最大位数
-        int countDigits = maxBits(max);
-        for (int i = 0; i < countDigits; i++) {
+        int maxBits = maxBits(max);
+        for (int i = 0; i < maxBits; i++) {
             process(arr, i);
         }
     }
