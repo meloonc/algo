@@ -9,5 +9,10 @@ public class Node {
         this.val = val;
     }
 
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+    }
+
 
 }
