@@ -19,10 +19,14 @@ public class BubbleSort {
      * 相邻两个数比较，大的数排在最后面，循环一次后，最大的数在最后的位置上
      */
     public static void sort(int[] arr) {
-        for (int i = 0; i < arr.length - 1; i++) {
-            for (int j = i + 1; j < arr.length; j++) {
-                if (arr[i] > arr[j]) {
-                    swap(arr, i, j);
+        // 0 ～ n-1 两两比较，大的数排在最后面
+        // 0 ～ n-2 两两比较，大的数排在最后面
+        for (int i = arr.length - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    swap(arr, j + 1, j);
+                    System.out.println("after swap" + Arrays.toString(arr));
+
                 }
             }
         }

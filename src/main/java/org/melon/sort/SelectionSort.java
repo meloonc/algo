@@ -26,6 +26,8 @@ public class SelectionSort {
                 }
             }
             swap(arr, i, minIndex);
+            System.out.println("after swap" + Arrays.toString(arr));
+
         }
     }
 
