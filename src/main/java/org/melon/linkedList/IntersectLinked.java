@@ -93,13 +93,14 @@ public class IntersectLinked {
         }
         // 快节点从头开始遍历，慢指针继续遍历
         // 相遇节点就是首个相交节点
-        while (head1 != null) {
-            if(head1 == slow) {
-                System.out.println("链表成环，相交节点：" + head1.val);
+        fast = head1;
+        while (fast != null) {
+            if(fast == slow) {
+                System.out.println("链表成环，相交节点：" + fast.val);
                 break;
-//                return head1;
+//                return fast;
             }
-            head1 = head1.next;
+            fast = fast.next;
             slow = slow.next;
         }
         System.out.println("链表没成环");
@@ -129,11 +130,12 @@ public class IntersectLinked {
         }
         // 快节点从头开始遍历，慢指针继续遍历
         // 相遇节点就是首个相交节点
-        while (head1 != null) {
-            if(head1 == slow) {
-                return head1;
+        fast = head1;
+        while (fast != null) {
+            if(fast == slow) {
+                return fast;
             }
-            head1 = head1.next;
+            fast = fast.next;
             slow = slow.next;
         }
         return null;
