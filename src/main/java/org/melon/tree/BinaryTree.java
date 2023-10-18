@@ -10,11 +10,11 @@ import java.util.Stack;
 /**
  * 二叉树
  * <p>
- *        5
- *      /  \
- *     3    7
- *    / \  / \
- *   2   4 6   8
+ * 5
+ * /  \
+ * 3    7
+ * / \  / \
+ * 2   4 6   8
  * </p>
  * 先序遍历：5 3 2 4 7 6 8 （头 左 右）
  * <p>
@@ -46,12 +46,25 @@ public class BinaryTree {
 //        pre(node5);
 //        post(node5);
 //        in(node5);
-        Queue<String> queue = preSerialized(node5);
-        System.out.println(queue);
+//        Queue<String> queue = preSerialized(node5);
+//        System.out.println(queue);
+//
+//        Node node = preDeserialized(queue);
+//        pre(node);
 
-        Node node = preDeserialized(queue);
-        pre(node);
 
+        Node node11 = new Node(1);
+        Node node12 = new Node(2);
+        Node node13 = new Node(3);
+        Node node14 = new Node(4);
+        node11.left = node12;
+        node12.right = node13;
+        node13.left = node14;
+        level(node11);
+        Queue<String> levelQueue = levelSerialized(node11);
+        System.out.println(levelQueue);
+
+        level(levelDeserialized(levelQueue));
     }
 
     /**
@@ -166,6 +179,10 @@ public class BinaryTree {
             }
         }
     }
+    /**
+     * @javadoc
+     * 中序无序列化，会有歧义，不同的数序列化结果可能是一样的
+     */
 
     /**
      * 先序序列化
@@ -188,16 +205,16 @@ public class BinaryTree {
         }
     }
 
-    public static Node preDeserialized(Queue<String> queue){
-        if(queue == null || queue.isEmpty()) {
+    public static Node preDeserialized(Queue<String> queue) {
+        if (queue == null || queue.isEmpty()) {
             return null;
         }
         return doPreDeserialized(queue);
     }
 
-    public static Node doPreDeserialized(Queue<String> queue){
+    public static Node doPreDeserialized(Queue<String> queue) {
         String poll = queue.poll();
-        if(poll == null) {
+        if (poll == null) {
             return null;
         }
 
@@ -207,7 +224,69 @@ public class BinaryTree {
         return node;
     }
 
+    /**
+     * 层序列化
+     *
+     * @param node
+     * @return
+     */
+    public static Queue<String> levelSerialized(Node node) {
+        Queue<String> queue = new LinkedList<>();
+        if (node == null) {
+            queue.add(null);
+            return queue;
+        }
+        Queue<Node> levelQueue = new LinkedList<>();
+        levelQueue.add(node);
+        while (!levelQueue.isEmpty()) {
+            Node cur = levelQueue.poll();
+            if (cur == null) {
+                queue.add(null);
+            } else {
+                queue.add(String.valueOf(cur.val));
+                levelQueue.add(cur.left);
+                levelQueue.add(cur.right);
+            }
+        }
+        return queue;
+    }
 
+    /**
+     * 层反序列化
+     *
+     * @param queue
+     * @return
+     */
+    public static Node levelDeserialized(Queue<String> queue) {
+        if (queue == null || queue.isEmpty()) {
+            return null;
+        }
+        Node head = generateNode(queue.poll());
+        Queue<Node> nodes = new LinkedList<>();
+        if(head != null) {
+            nodes.add(head);
+        }
+        Node cur = null;
+        while (!queue.isEmpty()) {
+            cur = nodes.poll();
+            cur.left = generateNode(queue.poll());
+            cur.right = generateNode(queue.poll());
+            if(cur.left != null) {
+                nodes.add(cur.left);
+            }
+            if(cur.right != null) {
+                nodes.add(cur.right);
+            }
+        }
+        return head;
+    }
+
+    private static Node generateNode(String val) {
+        if(val == null) {
+            return null;
+        }
+        return new Node(Integer.parseInt(val));
+    }
 
 
 }
