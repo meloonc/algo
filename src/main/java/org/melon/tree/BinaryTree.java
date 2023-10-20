@@ -1,9 +1,10 @@
 package org.melon.tree;
 
 
-import java.util.ArrayList;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -60,11 +61,11 @@ public class BinaryTree {
         node11.left = node12;
         node12.right = node13;
         node13.left = node14;
-        level(node11);
-        Queue<String> levelQueue = levelSerialized(node11);
-        System.out.println(levelQueue);
+        level(node5);
+//        Queue<String> levelQueue = levelSerialized(node11);
+//        System.out.println(levelQueue);
 
-        level(levelDeserialized(levelQueue));
+//        level(levelDeserialized(levelQueue));
     }
 
     /**
@@ -167,17 +168,30 @@ public class BinaryTree {
             return;
         }
         Queue<Node> queue = new LinkedList<Node>();
+        Node curLevelEnd = node;
+        Node nextLevelEnd = null;
+        int maxLength = 0;
+        int curLevelLength = 0;
         queue.add(node);
         while (!queue.isEmpty()) {
             node = queue.poll();
+            curLevelLength++;
             System.out.println(node.val);
             if (node.left != null) {
                 queue.add(node.left);
+                nextLevelEnd = node.left;
             }
             if (node.right != null) {
                 queue.add(node.right);
+                nextLevelEnd = node.right;
+            }
+            if (node == curLevelEnd) {
+                curLevelEnd = nextLevelEnd;
+                maxLength = Math.max(maxLength, curLevelLength);
+                curLevelLength = 0;
             }
         }
+        System.out.println("binary tree max length : " + maxLength);
     }
     /**
      * @javadoc
@@ -263,7 +277,7 @@ public class BinaryTree {
         }
         Node head = generateNode(queue.poll());
         Queue<Node> nodes = new LinkedList<>();
-        if(head != null) {
+        if (head != null) {
             nodes.add(head);
         }
         Node cur = null;
@@ -271,10 +285,10 @@ public class BinaryTree {
             cur = nodes.poll();
             cur.left = generateNode(queue.poll());
             cur.right = generateNode(queue.poll());
-            if(cur.left != null) {
+            if (cur.left != null) {
                 nodes.add(cur.left);
             }
-            if(cur.right != null) {
+            if (cur.right != null) {
                 nodes.add(cur.right);
             }
         }
@@ -282,10 +296,234 @@ public class BinaryTree {
     }
 
     private static Node generateNode(String val) {
-        if(val == null) {
+        if (val == null) {
             return null;
         }
         return new Node(Integer.parseInt(val));
+    }
+
+    /**
+     * 是否为完全二叉树
+     * <p>
+     * 1.完全二叉树，如果有右孩子没有左孩子，直接返回false
+     * 2.完全二叉树，如果有左孩子没有右孩子，那么后面的节点都必须是叶子节点
+     *
+     * @param node
+     * @return
+     */
+    private static Boolean isCompleteTree(Node node) {
+        if (node == null) {
+            return true;
+        }
+        boolean leaf = false;
+        Node l = null;
+        Node r = null;
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(node);
+        while (!queue.isEmpty()) {
+            Node poll = queue.poll();
+            l = poll.left;
+            r = poll.right;
+            // 1. 如果有右子节点但是没有左子节点则不是完全二叉树
+            // 2. 如果遇到过叶子节点，但是后面还有非叶子节点，则不是完全二叉树
+            if (l == null && r != null || leaf && l != null) {
+                return false;
+            }
+            if (l != null) {
+                queue.add(l);
+            }
+            if (r != null) {
+                queue.add(r);
+            }
+            // 找到叶子节点，后面的节点都必须是叶子节点
+            if (l == null || r == null) {
+                leaf = true;
+            }
+        }
+        return true;
+
+    }
+
+    /**
+     * 是否为满二叉树
+     * 满二叉树的节点数为2^h - 1
+     *
+     * @param node
+     * @return
+     */
+    private static boolean isFullTree(Node node) {
+        if (node == null) {
+            return true;
+        }
+        FullInfo fullInfo = doIsFullTree(node);
+
+        return (2 ^ fullInfo.height - 1) == fullInfo.nodes;
+    }
+
+    static class FullInfo {
+        // 高度
+        int height;
+        // 节点数量
+        int nodes;
+
+        public FullInfo(int h, int n) {
+            this.height = h;
+            this.nodes = n;
+        }
+    }
+
+    private static FullInfo doIsFullTree(Node node) {
+        if (node == null) {
+            return new FullInfo(0, 0);
+        }
+        FullInfo leftInfo = doIsFullTree(node.left);
+        FullInfo rightInfo = doIsFullTree(node.right);
+        int height = Math.max(leftInfo.height, rightInfo.height) + 1;
+        int nodes = leftInfo.nodes + rightInfo.nodes + 1;
+        return new FullInfo(height, nodes);
+    }
+
+
+    // 二叉树的递归套路
+    //
+    // 树形DP 递归套路
+    // 1.假设以X节点为头，假设可以向X左树和X右树要任何信息
+    // 2.在上一步的假设下，讨论以X为头节点的树，得到答案的可能性（最重要）
+    //
+
+    /**
+     * 是否为平衡二叉树
+     * 每一个节点的左子树和右子树的高度差不超过1
+     *
+     * @param node
+     * @return
+     */
+    private static boolean isBalanceTree(Node node) {
+        if (node == null) {
+            return true;
+        }
+        return doIsBalanceTree(node).isBalance;
+    }
+
+    /**
+     * 子节点是否为平衡二叉树所需的信息
+     */
+    @Data
+    @AllArgsConstructor
+    static class BalanceInfo {
+        // 子数是否为平衡二叉树
+        boolean isBalance;
+        // 子树的高度
+        int height;
+    }
+
+    private static BalanceInfo doIsBalanceTree(Node node) {
+        if (node == null) {
+            return new BalanceInfo(true, 0);
+        }
+        BalanceInfo leftInfo = doIsBalanceTree(node.left);
+        BalanceInfo rightInfo = doIsBalanceTree(node.right);
+        // 通过子树的信息来判断当前节点是否为平衡二叉树
+        boolean isBalance = true;
+        int height = Math.max(leftInfo.height, rightInfo.height) + 1;
+        if (!leftInfo.isBalance || !rightInfo.isBalance) {
+            isBalance = false;
+        }
+        // 判断子树高度差
+        if (Math.abs(leftInfo.height - rightInfo.height) > 1) {
+            isBalance = false;
+        }
+        return new BalanceInfo(isBalance, height);
+    }
+
+
+    /**
+     * 是否为搜索二叉树
+     * 左子树的值都小于当前节点的值，右子树的值都大于当前节点的值
+     *
+     * @param node
+     * @return
+     */
+    private static boolean isSearchTree(Node node) {
+        if (node == null) {
+            return true;
+        }
+        return doIsSearchTree(node).isSearch;
+    }
+
+    /**
+     * 是否为搜索树的信息
+     */
+    @AllArgsConstructor
+    static class SearchInfo {
+        // 子树是否为搜索树
+        boolean isSearch;
+        // 子树中最大的值
+        int max;
+        // 子树中最小的值
+        int min;
+    }
+
+    private static SearchInfo doIsSearchTree(Node node) {
+        if (node == null) {
+            return null;
+        }
+        SearchInfo leftInfo = doIsSearchTree(node.left);
+        SearchInfo rightInfo = doIsSearchTree(node.right);
+        // 通过子树的信息判断当前节点是否为搜索树
+        boolean isSearch = true;
+        int max = node.val;
+        int min = node.val;
+        if (leftInfo != null) {
+            if (!leftInfo.isSearch || leftInfo.max >= node.val) {
+                isSearch = false;
+            }
+            min = Math.min(leftInfo.min, min);
+            max = Math.max(leftInfo.max, max);
+        }
+        if (rightInfo != null) {
+            if (!rightInfo.isSearch || rightInfo.min <= node.val) {
+                isSearch = false;
+            }
+            min = Math.min(rightInfo.min, min);
+            max = Math.max(rightInfo.max, max);
+        }
+        return new SearchInfo(isSearch, max, min);
+    }
+
+    /**
+     * 获取二叉树的最大距离
+     * <p>
+     * 1. 最大距离经过当前节点，最大距离就是左右子树最大高度+1
+     * 2. 最大距离不经过当前节点，最大距离就是左右子树中最大的距离
+     *
+     * @param node
+     * @return
+     */
+    private static int getMaxDistance(Node node) {
+        return doGetMaxDistance(node).height;
+    }
+
+    static class MaxDistanceInfo {
+        int maxDistance;
+        int height;
+
+        public MaxDistanceInfo(int m, int h) {
+            this.maxDistance = m;
+            this.height = h;
+        }
+    }
+
+    private static MaxDistanceInfo doGetMaxDistance(Node node) {
+        if (node == null) {
+            return new MaxDistanceInfo(0, 0);
+        }
+
+        MaxDistanceInfo leftMax = doGetMaxDistance(node.left);
+        MaxDistanceInfo rightMax = doGetMaxDistance(node.right);
+        int height = Math.max(leftMax.height, rightMax.height) + 1;
+        int maxDistance = Math.max(height, Math.max(leftMax.maxDistance, rightMax.maxDistance));
+        return new MaxDistanceInfo(height, maxDistance);
     }
 
 
