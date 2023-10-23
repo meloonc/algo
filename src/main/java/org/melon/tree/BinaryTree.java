@@ -1,12 +1,15 @@
 package org.melon.tree;
 
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * 二叉树
@@ -345,6 +348,138 @@ public class BinaryTree {
     }
 
     /**
+     * 使用递归判断是否为完全二叉树
+     * 1. 左右子树都是满的，高度一致
+     * 2. 左子树是完全二叉树，右子树是满二叉树，左子树高度比右子树高度大1
+     * 3. 左右子树都是满的，左子树高度比右子树高度大1
+     * 4. 左子树是满二叉树，右子树是完全二叉树，左子树高度和右子树高度一致
+     *
+     * @param node
+     * @return
+     */
+    private static Boolean isCompleteTree2(Node node) {
+        if (node == null) {
+            return true;
+        }
+        return doIsCompleteTree2(node).isComplete;
+    }
+
+    static class CompleteInfo {
+        boolean isComplete;
+        boolean isFull;
+        int height;
+
+        public CompleteInfo(boolean isComplete, boolean isFull, int height) {
+            this.isComplete = isComplete;
+            this.isFull = isFull;
+            this.height = height;
+        }
+    }
+
+    private static CompleteInfo doIsCompleteTree2(Node node) {
+        if (node == null) {
+            return new CompleteInfo(true, true, 0);
+        }
+
+
+        CompleteInfo leftInfo = doIsCompleteTree2(node.left);
+        CompleteInfo rightInfo = doIsCompleteTree2(node.right);
+        int height = Math.max(leftInfo.height, rightInfo.height) + 1;
+        boolean isFull = leftInfo.isFull && rightInfo.isFull && leftInfo.height == rightInfo.height;
+        boolean isComplete = false;
+        if (leftInfo.isFull && rightInfo.isFull && leftInfo.height == rightInfo.height) {
+            isComplete = true;
+        } else if (leftInfo.isComplete && rightInfo.isFull && leftInfo.height - rightInfo.height == 1) {
+            isComplete = true;
+        } else if (leftInfo.isFull && rightInfo.isComplete && leftInfo.height == rightInfo.height) {
+            isComplete = true;
+        } else if (leftInfo.isFull && rightInfo.isFull && leftInfo.height - rightInfo.height == 1) {
+            isComplete = true;
+        }
+
+        return new CompleteInfo(isComplete, isFull, height);
+    }
+
+
+    @Test
+    public void testIsCompleteTree2() {
+        // Testing an empty tree
+        assertTrue(isCompleteTree2(null));
+
+        // Testing a tree with only one node
+        Node root = new Node(1);
+        assertTrue(isCompleteTree2(root));
+
+        // Testing a complete binary tree
+        //        1
+        //       / \
+        //      2   3
+        //     / \ / \
+        //    4  5 6  7
+        root = new Node(1);
+        root.left = new Node(2);
+        root.right = new Node(3);
+        root.left.left = new Node(4);
+        root.left.right = new Node(5);
+        root.right.left = new Node(6);
+        root.right.right = new Node(7);
+        assertTrue(isCompleteTree2(root));
+
+        // Testing a tree where left subtree is full and right subtree is complete
+        //        1
+        //       / \
+        //      2   3
+        //     / \ /
+        //    4  5 6
+        root = new Node(1);
+        root.left = new Node(2);
+        root.right = new Node(3);
+        root.left.left = new Node(4);
+        root.left.right = new Node(5);
+        root.right.left = new Node(6);
+        assertTrue(isCompleteTree2(root));
+
+        // Testing a tree where left subtree is complete and right subtree is full
+        //        1
+        //       / \
+        //      2   3
+        //     / \
+        //    4  5
+        root = new Node(1);
+        root.left = new Node(2);
+        root.right = new Node(3);
+        root.left.left = new Node(4);
+        root.left.right = new Node(5);
+        assertTrue(isCompleteTree2(root));
+
+        // Testing a tree where left subtree height is greater than right subtree height
+        //        1
+        //       /
+        //      2
+        //     / \
+        //    3   4
+        root = new Node(1);
+        root.left = new Node(2);
+        root.left.left = new Node(3);
+        root.left.right = new Node(4);
+        assertFalse(isCompleteTree2(root));
+
+        // Testing a tree where left subtree height is equal to right subtree height
+        //        1
+        //       / \
+        //      2   3
+        //     /   / \
+        //    4   5   6
+        root = new Node(1);
+        root.left = new Node(2);
+        root.right = new Node(3);
+        root.left.left = new Node(4);
+        root.right.left = new Node(5);
+        root.right.right = new Node(6);
+        assertFalse(isCompleteTree2(root));
+    }
+
+    /**
      * 是否为满二叉树
      * 满二叉树的节点数为2^h - 1
      *
@@ -409,12 +544,16 @@ public class BinaryTree {
      * 子节点是否为平衡二叉树所需的信息
      */
     @Data
-    @AllArgsConstructor
     static class BalanceInfo {
         // 子数是否为平衡二叉树
         boolean isBalance;
         // 子树的高度
         int height;
+
+        public BalanceInfo(boolean isBalance, int height) {
+            this.isBalance = isBalance;
+            this.height = height;
+        }
     }
 
     private static BalanceInfo doIsBalanceTree(Node node) {
@@ -454,7 +593,6 @@ public class BinaryTree {
     /**
      * 是否为搜索树的信息
      */
-    @AllArgsConstructor
     static class SearchInfo {
         // 子树是否为搜索树
         boolean isSearch;
@@ -462,6 +600,12 @@ public class BinaryTree {
         int max;
         // 子树中最小的值
         int min;
+
+        public SearchInfo(boolean isSearch, int max, int min) {
+            this.isSearch = isSearch;
+            this.max = max;
+            this.min = min;
+        }
     }
 
     private static SearchInfo doIsSearchTree(Node node) {
@@ -524,6 +668,34 @@ public class BinaryTree {
         int height = Math.max(leftMax.height, rightMax.height) + 1;
         int maxDistance = Math.max(height, Math.max(leftMax.maxDistance, rightMax.maxDistance));
         return new MaxDistanceInfo(height, maxDistance);
+    }
+
+    @Test
+    public void testGetMaxDistance() {
+        // Test case 1: Empty tree
+        Node node1 = null;
+        int result1 = getMaxDistance(node1);
+        assertEquals(0, result1);
+
+        // Test case 2: Tree with only one node
+        Node node2 = new Node(5);
+        int result2 = getMaxDistance(node2);
+        assertEquals(1, result2);
+
+        // Test case 3: Tree with two nodes
+        Node node3 = new Node(5);
+        node3.left = new Node(3);
+        int result3 = getMaxDistance(node3);
+        assertEquals(2, result3);
+
+        // Test case 4: Tree with multiple nodes
+        Node node4 = new Node(5);
+        node4.left = new Node(3);
+        node4.right = new Node(8);
+        node4.right.left = new Node(7);
+        node4.right.right = new Node(11);
+        int result4 = getMaxDistance(node4);
+        assertEquals(3, result4);
     }
 
 
