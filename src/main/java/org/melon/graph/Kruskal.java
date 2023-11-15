@@ -22,35 +22,11 @@ public class Kruskal {
     public void testKruskal() {
         Graph graph = new Graph();
 
-        // Create nodes
-        Graph.Node node1 = new Graph.Node(1);
-        Graph.Node node2 = new Graph.Node(2);
-        Graph.Node node3 = new Graph.Node(3);
-        Graph.Node node4 = new Graph.Node(4);
-
-        // Create edges
-        Graph.Edge edge1 = new Graph.Edge(4,node1, node2);
-        Graph.Edge edge2 = new Graph.Edge(1,node1, node3);
-        Graph.Edge edge3 = new Graph.Edge(3,node2, node3);
-        Graph.Edge edge4 = new Graph.Edge(2,node2, node4);
-        Graph.Edge edge5 = new Graph.Edge(5,node3, node4);
-
-        // Add nodes and edges to the graph
-        graph.nodes.put(1, node1);
-        graph.nodes.put(2, node2);
-        graph.nodes.put(3, node3);
-        graph.nodes.put(4, node4);
-
-        graph.edges.add(edge1);
-        graph.edges.add(edge2);
-        graph.edges.add(edge3);
-        graph.edges.add(edge4);
-        graph.edges.add(edge5);
-
-        Set<Graph.Edge> expected = new HashSet<>();
-        expected.add(edge2);
-        expected.add(edge4);
-        expected.add(edge1);
+        graph.addNode(4, 1, 2);
+        graph.addNode(1, 1, 3);
+        graph.addNode(3, 2, 3);
+        graph.addNode(2, 2, 4);
+        graph.addNode(5, 3, 4);
 
         Kruskal kruskal = new Kruskal();
         Set<Graph.Edge> kruskal1 = kruskal.kruskal(graph);
