@@ -1,10 +1,16 @@
 package org.melon.dp;
 
 /**
- * <a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/">
- * 121. 买卖股票的最佳时机</a>
+ * <a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/">121. 买卖股票的最佳时机</a>
  */
 public class MaxProfit {
+
+    public static void main(String[] args) {
+        MaxProfit maxProfit = new MaxProfit();
+        int[] prices = {7, 6, 4, 3, 1};
+        int profit = maxProfit.maxProfit(prices);
+        System.out.println(profit);
+    }
 
     public int maxProfit(int[] prices) {
         int max = 0;
@@ -14,20 +20,7 @@ public class MaxProfit {
             }
         }
         return max;
-    }
 
-
-    public int maxProfit2(int[] prices) {
-        int maxProfit = 0;
-        int minPrice = prices[0];
-        for (int price : prices) {
-            if(price > minPrice) {
-                maxProfit = Math.max(maxProfit, price - minPrice);
-            }else {
-                minPrice = price;
-            }
-        }
-        return maxProfit;
     }
 
 

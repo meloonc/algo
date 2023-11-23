@@ -3,7 +3,7 @@ package org.melon.array;
 /**
  * <a href="https://leetcode.com/problems/majority-element/">169. Majority Element</a>
  * <p>
- * 摩尔投票
+ * 摩尔投票 众数
  */
 public class MajorityElement {
     public int majorityElement(int[] nums) {
