@@ -3,15 +3,16 @@ package org.melon.dp;
 import java.util.Arrays;
 
 /**
- * <a href="https://leetcode-cn.com/problems/house-robber/">198. 打家劫舍</a>
+ * <a href="https://leetcode.cn/problems/coin-change/">322. 零钱兑换</a>
  */
 public class CoinChange {
 
     public static void main(String[] args) {
-        int[] coins = {1};
-        int amount = 0;
+        int[] coins = {1,2,5};
+        int amount = 11;
         CoinChange coinChange = new CoinChange();
         int min = coinChange.coinChange(coins, amount);
+        int dp2 = coinChange.dp2(coins, amount);
 
         System.out.println(min);
     }
@@ -60,6 +61,50 @@ public class CoinChange {
             dp[i] = min;
 
         }
-        return dp[amount] ==  Integer.MAX_VALUE ? -1 : dp[amount];
+        return dp[amount] == Integer.MAX_VALUE ? -1 : dp[amount];
+    }
+
+
+    public int min(int[] coins, int rest, int index) {
+        if (index == coins.length) {
+            return rest == 0 ? 0 : Integer.MAX_VALUE;
+        }
+
+        int min = Integer.MAX_VALUE;
+        for (int zhang = 0; zhang * coins[index] <= rest; zhang++) {
+            int next = min(coins, rest - zhang * coins[index], index + 1);
+            if (next != Integer.MAX_VALUE) {
+                min = Math.min(min, next + zhang);
+            }
+        }
+        return min;
+    }
+
+
+    public int dp2(int[] coins, int amount) {
+        int n = coins.length;
+
+        int[][] dp = new int[amount + 1][n+1];
+
+        for (int i = 0; i <=amount; i++) {
+            Arrays.fill(dp[i], Integer.MAX_VALUE);
+        }
+        dp[0][n] = 0;
+
+        for (int rest = 0; rest <= amount; rest++) {
+            for (int index = n - 1; index >= 0; index--) {
+                int min = Integer.MAX_VALUE;
+                for (int zhang = 0; zhang * coins[index] <= rest; zhang++) {
+                    int next = dp[rest - zhang * coins[index]][index + 1];
+                    if (next != Integer.MAX_VALUE) {
+                        min = Math.min(min, next + zhang);
+                    }
+                }
+                dp[rest][index] = min;
+            }
+        }
+        return dp[amount][0] == Integer.MAX_VALUE ? -1 : dp[amount][0];
+
+
     }
 }
