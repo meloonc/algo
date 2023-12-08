@@ -1,7 +1,7 @@
 package org.melon.dp;
 
 /**
- * <a href="https://leetcode-cn.com/problems/unique-paths-ii/">63. 不同路径 II</a>
+ * <a href="https://leetcode.cn/problems/unique-paths-ii/">63. 不同路径 II</a>
  */
 public class UniquePathsWithObstacles {
 

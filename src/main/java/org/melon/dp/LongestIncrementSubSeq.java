@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * 最长递增子序列
- * <a href="https://leetcode-cn.com/problems/longest-increasing-subsequence/">300. 最长递增子序列</a>
+ * <a href="https://leetcode.cn/problems/longest-increasing-subsequence/">300. 最长递增子序列</a>
  */
 public class LongestIncrementSubSeq {
 

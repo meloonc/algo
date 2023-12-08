@@ -1,7 +1,7 @@
-package org.melon.array;
+package org.melon.top150;
 
 /**
- * <a href=https://leetcode.com/problems/merge-sorted-array/description/>合并两个有序数组</a>
+ * <a href=https://leetcode.cn/problems/merge-sorted-array/description/>合并两个有序数组</a>
  */
 public class MergeSortedArray {
 

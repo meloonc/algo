@@ -1,7 +1,7 @@
 package org.melon.dp;
 
 /**
- * <a href="https://leetcode-cn.com/problems/house-robber/">198. 打家劫舍</a>
+ * <a href="https://leetcode.cn/problems/house-robber/">198. 打家劫舍</a>
  */
 public class Rob {
 

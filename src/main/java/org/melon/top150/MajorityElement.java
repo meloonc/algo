@@ -1,7 +1,7 @@
-package org.melon.array;
+package org.melon.top150;
 
 /**
- * <a href="https://leetcode.com/problems/majority-element/">169. Majority Element</a>
+ * <a href="https://leetcode.cn/problems/majority-element/">169. Majority Element</a>
  * <p>
  * 摩尔投票 众数
  */

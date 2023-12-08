@@ -1,7 +1,7 @@
 package org.melon.dp;
 
 /**
- * <a href="https://leetcode-cn.com/problems/stickers-to-spell-word/">691. 贴纸拼词</a>
+ * <a href="https://leetcode.cn/problems/stickers-to-spell-word/">691. 贴纸拼词</a>
  */
 public class MinStickers {
 

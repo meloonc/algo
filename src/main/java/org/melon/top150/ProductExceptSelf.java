@@ -1,4 +1,4 @@
-package org.melon.array;
+package org.melon.top150;
 
 /**
  * <a href="https://leetcode.cn/problems/product-of-array-except-self/">238. Product of Array Except Self</a>

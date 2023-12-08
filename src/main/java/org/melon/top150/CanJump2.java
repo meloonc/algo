@@ -1,4 +1,4 @@
-package org.melon.dp;
+package org.melon.top150;
 
 /**
  * <a href="https://leetcode.cn/problems/jump-game-ii/">45. 跳跃游戏2</a>

@@ -1,7 +1,7 @@
 package org.melon.dp;
 
 /**
- * <a href="https://leetcode-cn.com/problems/maximal-square/">221. 最大正方形</a>
+ * <a href="https://leetcode.cn/problems/maximal-square/">221. 最大正方形</a>
  */
 public class MaximalSquare {
 

@@ -2,7 +2,7 @@ package org.melon.dp;
 
 /**
  * 最长公共子序列
- * <a href="https://leetcode-cn.com/problems/longest-common-subsequence/">1143. 最长公共子序列</a>
+ * <a href="https://leetcode.cn/problems/longest-common-subsequence/">1143. 最长公共子序列</a>
  */
 public class LongestCommonSubSeq {
 

@@ -1,7 +1,7 @@
-package org.melon.array;
+package org.melon.top150;
 
 /**
- * <a href="https://leetcode-cn.com/problems/remove-element/">移除元素</a>
+ * <a href="https://leetcode.cn/problems/remove-element/">移除元素</a>
  */
 public class RemoveElement {
 

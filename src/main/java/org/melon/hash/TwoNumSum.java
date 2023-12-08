@@ -3,7 +3,7 @@ package org.melon.hash;
 import java.util.HashMap;
 
 /**
- * <a href="https://leetcode-cn.com/problems/two-sum/">1. 两数之和</a>
+ * <a href="https://leetcode.cn/problems/two-sum/">1. 两数之和</a>
  */
 public class TwoNumSum {
 

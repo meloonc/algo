@@ -1,7 +1,7 @@
-package org.melon.dp;
+package org.melon.top150;
 
 /**
- * <a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/">
+ * <a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/">
  * 122. 买卖股票的最佳时机</a>
  */
 public class MaxProfit2 {

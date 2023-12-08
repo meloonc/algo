@@ -1,7 +1,7 @@
 package org.melon.dp;
 
 /**
- * <a href="https://leetcode-cn.com/problems/minimum-path-sum/">64. 最小路径和</a>
+ * <a href="https://leetcode.cn/problems/minimum-path-sum/">64. 最小路径和</a>
  */
 public class MinPathSum {
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <a href="https://leetcode-cn.com/problems/triangle/">120. 三角形最小路径和</a>
+ * <a href="https://leetcode.cn/problems/triangle/">120. 三角形最小路径和</a>
  */
 public class MinimumTotal {
 

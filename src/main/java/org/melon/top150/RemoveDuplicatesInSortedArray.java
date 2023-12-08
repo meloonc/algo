@@ -1,4 +1,4 @@
-package org.melon.array;
+package org.melon.top150;
 
 /**
  * <a href="https://leetcode.cn/problems/remove-duplicates-from-sorted-array"></a>

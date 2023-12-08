@@ -1,11 +1,11 @@
-package org.melon.array;
+package org.melon.top150;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * <a href="https://leetcode.com/problems/majority-element-ii/">229. 多数元素 II</a>
+ * <a href="https://leetcode.cn/problems/majority-element-ii/">229. 多数元素 II</a>
  * <p>
  * 摩尔投票
  */

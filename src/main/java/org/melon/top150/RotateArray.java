@@ -1,7 +1,7 @@
-package org.melon.array;
+package org.melon.top150;
 
 /**
- * <a href="https://leetcode.com/problems/rotate-array/">189. Rotate Array</a>
+ * <a href="https://leetcode.cn/problems/rotate-array/">189. Rotate Array</a>
  */
 public class RotateArray {
 
@@ -20,9 +20,9 @@ public class RotateArray {
 //            moveStep--;
 //        }
 
-        reverse(nums, 0, n-1);
-        reverse(nums, 0, moveStep-1);
-        reverse(nums, moveStep, n-1);
+        reverse(nums, 0, n - 1);
+        reverse(nums, 0, moveStep - 1);
+        reverse(nums, moveStep, n - 1);
     }
 
     private void moveEnd2Begin(int[] nums) {

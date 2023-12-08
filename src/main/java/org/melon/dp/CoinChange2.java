@@ -1,7 +1,7 @@
 package org.melon.dp;
 
 /**
- * <a href="https://leetcode-cn.com/problems/coin-change-2/">518. 零钱兑换 II</a>
+ * <a href="https://leetcode.cn/problems/coin-change-2/">518. 零钱兑换 II</a>
  */
 public class CoinChange2 {
 

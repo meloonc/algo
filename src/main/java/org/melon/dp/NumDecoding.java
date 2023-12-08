@@ -1,7 +1,7 @@
 package org.melon.dp;
 
 /**
- * <a href="https://leetcode-cn.com/problems/decode-ways/">91. 解码方法</a>
+ * <a href="https://leetcode.cn/problems/decode-ways/">91. 解码方法</a>
  */
 public class NumDecoding {
 
