@@ -45,10 +45,13 @@ public class CanJump {
     public boolean canJump2(int[] nums) {
         int far = 0;
         for (int i = 0; i < nums.length; i++) {
+            // 说明最远距离不能到达
             if (i > far) {
                 return false;
             }
+            // 最远位置
             far = Math.max(far, i + nums[i]);
+            // 如果已经能到最远位置
             if (far >= nums.length - 1) {
                 return true;
             }
